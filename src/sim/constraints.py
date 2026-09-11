@@ -39,6 +39,9 @@ class FixedPointConstraint(Constraint):
     def initialize_constraint(self):
         self.obj.set_position(np.array(self.fixed_point))
 
+class FixedJointConstraint(Constraint):
+    def __init__(self, fixed_obj, obj, plane_normal=None, angle=0.0, distance=None):
+        pass
 
 class DistanceConstraint(Constraint):
     def __init__(self, obj1, obj2, distance):

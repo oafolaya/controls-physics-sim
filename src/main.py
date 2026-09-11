@@ -7,7 +7,7 @@ from sim.controllers import PIDController
 def main():
     pm = PointMass(mass=1.5) 
     m = PointMass(mass=10.0, position=[1,5,0])
-    d = DistanceConstraint(pm, m, 3)
+    d = DistanceConstraint(pm, m, 5)
     pid = PIDController(P=1, I = 1)
     fix = FixedPointConstraint(pm, [0, 0, 0])
     pid.add_target(pm)

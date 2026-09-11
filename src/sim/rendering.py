@@ -17,6 +17,7 @@ class Renderer():
                 if o.target_position is not None:
                     target_pos = self.project_orthographic(o.target_position)
                     pygame.draw.circle(self.screen, "red", target_pos, radius = render_radius)
+                    pygame.draw.aaline(self.screen, "red", start_pos=pos, end_pos=target_pos, width=1)
                 pygame.draw.circle(self.screen, "black", pos, radius = render_radius)
                 
         for c in self.constraint_list:
@@ -24,7 +25,7 @@ class Renderer():
                 p1 = self.project_orthographic(c.obj1.get_position())
                 p2 = self.project_orthographic(c.obj2.get_position())
                 
-                pygame.draw.line(self.screen, "black", start_pos=p1, end_pos=p2, width=2)
+                pygame.draw.aaline(self.screen, "black", start_pos=p1, end_pos=p2, width=2)
 
     def world_to_screen(self, scale, value):
         scale = float(scale)

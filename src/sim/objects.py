@@ -3,17 +3,25 @@ import numpy as np
 
 class PointMass():
     def __init__(self, mass=10.0, position = [0.0, 0.0, 0.0], velocity = [0.0, 0.0, 0.0], restitution = 0.6, radius = .1):
-        self.mass = mass 
-        self.x_position = position[0]
-        self.y_position = position[1]
-        self.z_position = position[2]
-        self.x_velocity = velocity[0]
-        self.y_velocity = velocity[1]
-        self.z_velocity = velocity[2]
+        self.mass = float(mass) 
+        self.x_position = float(position[0])
+        self.y_position = float(position[1])
+        self.z_position = float(position[2])
+        self.x_velocity = float(velocity[0])
+        self.y_velocity = float(velocity[1])
+        self.z_velocity = float(velocity[2])
+        self.x_angular_position = float(0)
+        self.y_angular_position = float(0)
+        self.z_angular_position = float(0)
+        self.x_angular_velocity = float(0)
+        self.y_angular_velocity = float(0)
+        self.z_angular_velocity = float(0)
+        self.moment_of_inertia = float(0)
+
         self.accumulated_force = np.array([0.0, 0.0, 0.0])
         self.target_position = None
-        self.restitution = restitution
-        self.radius = radius
+        self.restitution = float(restitution)
+        self.radius = float(radius)
         
     def get_state(self): # form state vector
         state = np.array([self.x_position, 
@@ -34,7 +42,7 @@ class PointMass():
         return velocity
 
     def set_state(self, state): # state must be vector of size 6
-        state = np.array(state)
+        state = np.array(state, dtype=float)
         self.x_position = state.item(0)
         self.y_position = state.item(1)
         self.z_position = state.item(2)
@@ -43,13 +51,13 @@ class PointMass():
         self.z_velocity = state.item(5)
     
     def set_position(self, position):
-        position = np.array(position)
+        position = np.array(position, dtype=float)
         self.x_position = position.item(0)
         self.y_position = position.item(1)
         self.z_position = position.item(2)
     
     def set_velocity(self, velocity):
-        velocity = np.array(velocity)
+        velocity = np.array(velocity, dtype=float)
         self.x_velocity = velocity.item(0)
         self.y_velocity = velocity.item(1)
         self.z_velocity = velocity.item(2)
@@ -64,41 +72,42 @@ class PointMass():
         self.accumulated_force = self.accumulated_force + force
     
     def clear_forces(self):
-        self.accumulated_force = np.array([0, 0, 0])
+        self.accumulated_force = np.array([0, 0, 0], dtype=float)
 
     def set_target_position(self, target_position):
+        target_position = np.array(target_position, dtype=float)
         self.target_position = target_position
     
     def set_restitution(self, restitution):
-        self.restitution = restitution
+        self.restitution = float(restitution)
 
     def set_radius(self, radius):
-        self.radius = radius
+        self.radius = float(radius)
 
 
 class RigidBody():
     def __init__(self, mass=10,moment_of_inertia=10, position = [0, 0, 0],
                 velocity = [0, 0, 0], angular_position = [0,0,0],
                 angular_velocity = [0, 0, 0], restitution = 0.6):
-        self.accumulated_force = np.array([0, 0, 0])
-        self.accumulated_torque = np.array([0, 0, 0])
-        self.mass = mass
-        self.x_position = position[0]
-        self.y_position = position[1]
-        self.z_position = position[2]
-        self.x_velocity = velocity[0]
-        self.y_velocity = velocity[1]
-        self.z_velocity = velocity[2]
-        self.x_angular_position = angular_position[0]
-        self.y_angular_position = angular_position[1]
-        self.z_angular_position = angular_position[2]
-        self.x_angular_velocity = angular_velocity[0]
-        self.y_angular_velocity = angular_velocity[1]
-        self.z_angular_velocity = angular_velocity[2]
-        self.moment_of_inertia = moment_of_inertia
+        self.accumulated_force = np.array([0, 0, 0], dtype=float)
+        self.accumulated_torque = np.array([0, 0, 0], dtype=float)
+        self.mass = float(mass)
+        self.x_position = float(position[0])
+        self.y_position = float(position[1])
+        self.z_position = float(position[2])
+        self.x_velocity = float(velocity[0])
+        self.y_velocity = float(velocity[1])
+        self.z_velocity = float(velocity[2])
+        self.x_angular_position = float(angular_position[0])
+        self.y_angular_position = float(angular_position[1])
+        self.z_angular_position = float(angular_position[2])
+        self.x_angular_velocity = float(angular_velocity[0])
+        self.y_angular_velocity = float(angular_velocity[1])
+        self.z_angular_velocity = float(angular_velocity[2])
+        self.moment_of_inertia = float(moment_of_inertia)
         self.target_position = None
         self.target_angular_position = None
-        self.restitution = restitution
+        self.restitution = float(restitution)
 
 
     def get_state(self): # form state vector
@@ -118,7 +127,7 @@ class RigidBody():
         return state
 
     def set_state(self, state): # state must be vector of size 6
-        state = np.array(state)
+        state = np.array(state, dtype=float)
         self.x_position = state.item(0)
         self.y_position = state.item(1)
         self.z_position = state.item(2)
@@ -133,25 +142,25 @@ class RigidBody():
         self.z_angular_velocity = state.item(11)
 
     def set_position(self, position):
-        position = np.array(position)
+        position = np.array(position, dtype=float)
         self.x_position = position.item(0)
         self.y_position = position.item(1)
         self.z_position = position.item(2)
     
     def set_velocity(self, velocity):
-        velocity = np.array(velocity)
+        velocity = np.array(velocity, dtype=float)
         self.x_velocity = velocity.item(0)
         self.y_velocity = velocity.item(1)
         self.z_velocity = velocity.item(2)
 
     def set_angular_position(self, angular_position):
-        position = np.array(angular_position)
+        position = np.array(angular_position, dtype=float)
         self.x_position = position.item(0)
         self.y_position = position.item(1)
         self.z_position = position.item(2)
     
     def set_angular_velocity(self, angular_velocity):
-        velocity = np.array(angular_velocity)
+        velocity = np.array(angular_velocity, dtype=float)
         self.x_velocity = velocity.item(0)
         self.y_velocity = velocity.item(1)
         self.z_velocity = velocity.item(2)
@@ -166,19 +175,22 @@ class RigidBody():
         return 1/self.moment_of_inertia
     
     def add_force(self, force):
-        self.accumulated_force += force
+        force = np.array(force, dtype=float)
+        self.accumulated_force = self.accumulated_force + force
     
     def clear_force(self):
         self.accumulated_force = np.array([0, 0, 0])
 
     def add_torque(self, torque):
-        self.accumulated_torque += torque
+        torque = np.array(torque, dtype=float)
+        self.accumulated_torque = self.accumulated_force + torque
     
     def clear_torque(self,):
-        self.accumulated_torque = np.array([0, 0, 0])
+        self.accumulated_torque = np.array([0, 0, 0], dtype=float)
 
     def set_target_position(self, target_position):
+        target_position = np.array(target_position, dtype=float)
         self.target_position = target_position
     
     def set_restitution(self, restitution):
-        self.restitution = restitution
+        self.restitution = float(restitution)
